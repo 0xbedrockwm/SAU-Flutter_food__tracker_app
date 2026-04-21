@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_task_app/views/show_all_food_tracker_ui.dart';
+
+class SplashScreenUi extends StatefulWidget {
+  const SplashScreenUi({super.key});
+
+  @override
+  State<SplashScreenUi> createState() => _SplashScreenUiState();
+}
+
+class _SplashScreenUiState extends State<SplashScreenUi> {
+  @override
+  void initState() {
+    // หน่วงหน้าจอ 3 วิแล้วเปิดไปหน้า show all food tracker ui แบบย้อนกลับไม่ได้
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ShowAllFoodTrackerUi(),
+        ),
+      );
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          //ชั้นที่ 1
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/logo.png',
+                  width: 200,
+                  height: 200,
+                  fit: BoxFit.cover,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CircularProgressIndicator(
+                  color: Colors.yellowAccent,
+                ),
+                Text(
+                  '😋Food Tracker🍉',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          //ชั้นที่ 2
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'Created by WISNU MKL',
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
+                Text(
+                  'Sounteast Asia University',
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
+                SizedBox(
+                  height: 80,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
