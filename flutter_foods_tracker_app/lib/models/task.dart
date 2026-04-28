@@ -5,8 +5,8 @@ class Task {
   String? foodDate;
   String? foodMeal;
   String? foodName;
-  String? foodPrice;
-  String? foodPerson;
+  double? foodPrice;
+  int? foodPerson;
   String? foodImageUrl;
 
   //Contructor

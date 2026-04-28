@@ -15,7 +15,7 @@ class SupabaseService {
   //เมธอดดึงข้อมูลงานทั้งหมด จากตาราง task_tb เพื่อไปใชกับหน้า ShowAllTaskUi
   Future<List<Task>> getAllTask() async {
     //ดึงข้อมูล
-    final data = await supabase.from('task_tb').select('*');
+    final data = await supabase.from('foods_tracker_tb').select('*');
 
     //ส่งค่าข้อมูลที่ดึง กลับไปใช้งานอย่างที่ต้องการ
     return data.map((e) => Task.fromJson(e)).toList();
@@ -27,15 +27,15 @@ class SupabaseService {
     final newFileName = '${DateTime.now()}_${file.path.split('/').last}';
 
     //อัพโหลดไฟล์ไปยัง bucket
-    await supabase.storage.from('task_bk').upload(newFileName, file);
+    await supabase.storage.from('foods_tracker_bk').upload(newFileName, file);
 
     //ส่งค่าข้อมูล url ของไฟล์ที่อัปโหลด กลับไปใช้งานอย่างที่ต้องการ
-    return supabase.storage.from('task_bk').getPublicUrl(newFileName);
+    return supabase.storage.from('foods_tracker_bk').getPublicUrl(newFileName);
   }
 
   //เมธอด เพิ่ม ข้อมูลลงตาราง task_tb เพื่อใช้กับหน้า AddTaskUi
   Future<void> insertTask(Task task) async {
-    await supabase.from('task_tb').insert(task.toJson());
+    await supabase.from('foods_tracker_tb').insert(task.toJson());
   }
 
   //เมธอด ลบ ไฟล์รูปออกจากบักเก็ต task_bk เพื่อใช้กับหน้า UpdateDeleteTaskUi
@@ -43,16 +43,16 @@ class SupabaseService {
     //การลบจะตัดเอาเฉพาะชื่อ
     final fileName = taskImageUrl.split('/').last;
 
-    await supabase.storage.from('task_bk').remove([fileName]);
+    await supabase.storage.from('foods_tracker_bk').remove([fileName]);
   }
 
   //เมธอด แก้ไข ข้อมูลในตาราง task_tb เพื่อใช้กับหน้า UpdateDeleteTaskUi
   Future<void> updateTask(String id, Task task) async {
-    await supabase.from('task_tb').update(task.toJson()).eq('id', id);
+    await supabase.from('foods_tracker_tb').update(task.toJson()).eq('id', id);
   }
 
   //เมธอด ลบ ข้อมูลออกจากตาราง task_tb เพื่อใช้กับหน้า UpdateDeleteTaskUi
   Future<void> deleteTask(String id) async {
-    await supabase.from('task_tb').delete().eq('id', id);
+    await supabase.from('foods_tracker_tb').delete().eq('id', id);
   }
 }
